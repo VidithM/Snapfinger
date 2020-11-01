@@ -1,0 +1,16 @@
+<head>
+    <script src = '../js/chatview.js'></script>
+</head>
+<body onload = 'initialize()'>
+    <div align = 'left'>
+        <h1 id = 'greeting'></h1>
+        <button onclick = 'logout()'>Logout</button>
+        <h2>Your chats:</h2>
+        <ul id = 'chatList'>
+
+        </ul>
+        <input id = 'chatNameIn' type = 'text' placeholder = 'Enter chat name'>
+        <br>
+        <button onclick = 'addChat()' id = 'addChatBtn'>Add Chat</button>
+    </div>
+</body>

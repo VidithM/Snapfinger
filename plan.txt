@@ -1,0 +1,33 @@
+Dedicated chatting app
+- Features
+    - Account registration/login
+    - Chatrooms associated with account 
+
+- Requirements
+    - Database
+        - Store account info
+        - Store chatroom info
+    - Front end
+        - Login/account creation interface
+        - Chatting interface 
+        - Chatroom display
+
+- Functionality
+    - Realtime chatting 
+        - WebSocket
+    - Updates on front-end whenever messages are received
+
+
+
+
+- For chat view page
+    - Whenever requested, serve page
+    - On the frontend, send request with UID from cookie to populate chat data on page 
+        - Backend endpoint will return all chats if valid UID
+    - If bad UID, erase cookie and go back to home
+
+
+- Chatview updating
+    - For each chat, maintain 
+    
+
