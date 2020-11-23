@@ -3,30 +3,22 @@
     <script src = '../js/chat.js'></script>
 </head>
 <body onload = 'initialize()'>
-    <button onclick = 'back()'>Return</button>
-    <div id = 'chatbody'>
-        <div class="container">
-            <img src="/w3images/bandmember.jpg" alt="Avatar">
-            <p>Hello. How are you today?</p>
-            <span class="time-right">11:00</span>
-        </div>
-        
-        <div class="container darker">
-            <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-            <p>Hey! I'm fine. Thanks for asking!</p>
-            <span class="time-left">11:01</span>
-        </div>
-        
-        <div class="container">
-            <img src="/w3images/bandmember.jpg" alt="Avatar">
-            <p>Sweet! So, what do you wanna do today?</p>
-            <span class="time-right">11:02</span>
-        </div>
-        
-        <div class="container darker">
-            <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-            <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-            <span class="time-left">11:05</span>
-        </div> 
-    </div>
+   <button>Load More Messages</button>
+   <button onclick = 'back()'>Back to Chats</button>
+   <div id = 'chatBody' class = 'chatBody'>
+       <p class = 'message'>
+           <t>Loading chat...</t>
+       </p>
+   </div>
+   <div class = 'sendBar'>
+    <input id = 'msgIn' style = 'width:40%' type = 'text' placeholder = 'Enter message'>
+    <button onclick = 'pushMessage()'>Send</button>
+    <br>
+    <t id = 'notif' style = 'color:orange'></t>
+    <br><br>
+    <t>Want to invite another user to this chat?</t>
+    <br>
+    <input id = 'inviteIn' type = 'test' placeholder = "Enter other user's email">
+    <button onclick = 'invite()'>Send Invite</button>
+   </div>
 </body>

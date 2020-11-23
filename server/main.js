@@ -1,17 +1,24 @@
 const { triggerAsyncId } = require('async_hooks');
 const express = require('express');
+const socket = require('ws');
+const http = require('http');
 const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
 
+const wsServer = http.createServer(app)
+
 const Account = require('./models').Account;
 
-const api = require('./api').router;
-app.use('/api', api);
+const apiRouter = require('./api').router;
+const chatApiRouter = require('./chat-api').router;
+
+app.use('/api', apiRouter);
+app.use('/api/chat', chatApiRouter);
 
 const CLIENT_PATH = path.join(__dirname, '..', 'client/');
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = 'mongodb+srv://vid:Yj3iwVG2VvOGsaPf@cluster0.jwdod.mongodb.net/Snapfinger?retryWrites=true&w=majority';
 
 mongoose.connect(MONGO_URI , {
     useNewUrlParser : true,
@@ -21,9 +28,12 @@ mongoose.connect(MONGO_URI , {
 app.use(express.static(CLIENT_PATH));
 app.use(express.json())
 
-/*
-    Landing
-*/
+
+const wss = new socket.Server({server : wsServer});
+wss.on('connection', (ws) => {
+    console.log('Connection made');
+});
+
 app.all('/', async (req, res) => {
     if(req.method == 'POST'){
         //handle login
@@ -32,6 +42,7 @@ app.all('/', async (req, res) => {
         let psswrd = req.body['password'];
 
         let val = await Account.findOne({email : email});
+
         if(val == null){
             resp.status = 'FAILED';
             resp.content = {comment : 'Invalid email'};

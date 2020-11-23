@@ -13,11 +13,11 @@ let AccountSchema = new Schema({
 });
 
 let MessageSchema = new Schema({
-    type: String,
+    author: mongoose.ObjectId,
     content: String,
 });
 
-ChatroomSchema = new Schema({
+let ChatroomSchema = new Schema({
     name: String,
     members: [mongoose.ObjectId],
     messages: [mongoose.ObjectId],

@@ -1,15 +1,27 @@
 var chats = [];
+var invitations = [];
 
-function updateDOM(){
-    let res = '<ul>';
+function render(){
+    let res = '';
     if(chats.length == 0){
         res += "<li>You're not in any chats!</li></ul>";
     }
-    for (chatData in chats){
-        let curr = chats[chatData];
+    for (idx in chats){
+        let curr = chats[idx];
         res += '<li><a href = /chat/' + curr.id + '>' + curr.name + '</a><br><t>' + curr.members.length + ' members</t></li>\n';
     }
     document.getElementById('chatList').innerHTML = res;
+
+    res = '';
+    if(invitations.length == 0){
+        res += '<li>No invitations...</li>';
+    }
+    for (idx in invitations){
+        let curr = invitations[idx];
+        res += '<li><t>' + curr.from + ' is inviting you to room ' + curr.room + '</t><br>';
+        res += '<button onclick = "handleInvite(' + idx + ', true)">Accept</button><button onclick = "handleInvite(' + idx + ', false)">Decline</button></li>';
+    }
+    document.getElementById('inviteList').innerHTML = res;
 }
 
 async function addChat() { 
@@ -39,11 +51,20 @@ async function initialize(){
     fetchUpdates();
     setInterval(fetchUpdates, 2000);
 }
-
+async function handleInvite(idx, accept){
+    let uid = localStorage.getItem('uid');
+    let resp = await fetch('/api/handleInvite', {
+        method : 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({uid : uid, idx : idx, accept : accept}),
+    });
+}
 //Periodically checks for updates on chats
 async function fetchUpdates(){
     let uid = localStorage.getItem('uid');
-    let resp = await fetch('/api/getChats', {
+    let resp = await fetch('/api/getAccountData', {
         method : 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -57,6 +78,7 @@ async function fetchUpdates(){
     } else {
         document.getElementById('greeting').innerHTML = 'Welcome, ' + respJSON.content.name;
         chats = respJSON.content.chatroomData;
-        updateDOM();
+        invitations = respJSON.content.inviteData;
+        render();
     }
 }
