@@ -1,5 +1,5 @@
-## Welcome to Snapfinger
-# Chatting webapp built using Express on the backend, plain HTML/JS on the front
+# Welcome to Snapfinger
+### Chatting webapp built using Express on the backend, plain HTML/JS on the front
 
 ## Current Features:
 * Account creation, chatroom creation, invite other users to chatroom, chatting
